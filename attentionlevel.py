@@ -5,7 +5,7 @@ from keras import constraints
 from keras.engine.topology import Layer
 class Attention(Layer):
 
-    def __init__(self,maxlen,h,output_dim,**kwargs):
+    def __init__(self,h,output_dim,**kwargs):
         self.output_dim=output_dim
         super(Attention, self).__init__(**kwargs)
 
@@ -22,6 +22,7 @@ class Attention(Layer):
                                   shape=(input_shape[-1], self.output_dim),
                                   initializer='uniform',
                                   trainable=True)
+        super(Attention, self).build(input_shape)
     def call(self, x):
         Q_seq, K_seq, V_seq = x,x,x
         Q_seq = K.dot(Q_seq, self.WQ)
